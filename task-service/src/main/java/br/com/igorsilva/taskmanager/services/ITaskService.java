@@ -3,7 +3,6 @@ package br.com.igorsilva.taskmanager.services;
 import br.com.igorsilva.taskmanager.entities.TaskModel;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface ITaskService {
     List<TaskModel> getTasksByUserId(String userId);

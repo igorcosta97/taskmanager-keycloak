@@ -46,7 +46,7 @@ public class TaskController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public TaskModel createTask(@RequestBody TaskDto taskDto, @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<TaskModel> createTask(@RequestBody TaskDto taskDto, @AuthenticationPrincipal Jwt jwt) {
         String userId = jwt.getSubject();
         log.info("Requisição recebida para criar uma nova tarefa para o usuário: {}", userId);
         TaskModel newTask = new TaskModel();
@@ -54,7 +54,7 @@ public class TaskController {
         newTask.setUserId(userId);
         TaskModel taskCreated = taskService.createTask(newTask);
         log.info("Tarefa criada com sucesso: {}", taskCreated);
-        return taskCreated;
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskCreated);
     }
 
     @PutMapping("/{id}")

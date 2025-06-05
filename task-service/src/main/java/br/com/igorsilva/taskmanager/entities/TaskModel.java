@@ -1,5 +1,6 @@
 package br.com.igorsilva.taskmanager.entities;
 
+import br.com.igorsilva.taskmanager.enuns.Status;
 import jakarta.persistence.*;
 import lombok.*;
 @Table(name = "tasks")
@@ -15,8 +16,6 @@ public class TaskModel {
     private String id;
     private String title;
     private String description;
-    private String status;
+    private Status status;
     private String userId;
-
-
 }
