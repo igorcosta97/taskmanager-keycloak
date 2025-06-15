@@ -1,5 +1,6 @@
 package br.com.igorsilva.taskmanager.controlles;
 
+import br.com.igorsilva.taskmanager.dtos.EmailRequestDTO;
 import br.com.igorsilva.taskmanager.dtos.TaskDto;
 import br.com.igorsilva.taskmanager.entities.TaskModel;
 import br.com.igorsilva.taskmanager.services.ITaskService;
@@ -7,12 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class TaskController {
     private ITaskService taskService;
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
+
+    private final RestTemplate restTemplate = new RestTemplate();
 
 
     @GetMapping("/all")
@@ -54,6 +57,32 @@ public class TaskController {
         newTask.setUserId(userId);
         TaskModel taskCreated = taskService.createTask(newTask);
         log.info("Tarefa criada com sucesso: {}", taskCreated);
+
+        // Enviar notificação de e-mail após a criação da tarefa
+        String emailServiceUrl = "http://localhost:8084/email/send";
+        EmailRequestDTO emailRequest = new EmailRequestDTO(
+                jwt.getClaimAsString("email"),
+                taskCreated.getTitle(),
+                taskCreated.getDescription()
+        );
+
+        // Criar headers e adicionar Authorization com Bearer token
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(jwt.getTokenValue());  // adiciona o token JWT no header Authorization
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Criar HttpEntity com body e headers
+        HttpEntity<EmailRequestDTO> requestEntity = new HttpEntity<>(emailRequest, headers);
+
+        // Fazer a chamada POST passando o HttpEntity
+        ResponseEntity<Void> emailResponse = restTemplate.postForEntity(emailServiceUrl, requestEntity, Void.class);
+
+        if (emailResponse.getStatusCode() != HttpStatus.OK) {
+            log.error("Erro ao enviar notificação de e-mail para: {}", emailRequest.recipient());
+        }else{
+            log.info("Notificação de e-mail enviada com sucesso para: {}", emailRequest.recipient());
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(taskCreated);
     }
 
