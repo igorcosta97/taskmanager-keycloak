@@ -1,10 +1,9 @@
-package br.com.igorsilva.email_notification_service.facades;
+package br.com.igorsilva.emailnotification.facades;
 
-import br.com.igorsilva.email_notification_service.entities.EmailModel;
-import br.com.igorsilva.email_notification_service.services.ICreateEmailService;
-import br.com.igorsilva.email_notification_service.services.ISendEmailService;
+import br.com.igorsilva.emailnotification.entities.EmailModel;
+import br.com.igorsilva.emailnotification.services.ICreateEmailService;
+import br.com.igorsilva.emailnotification.services.ISendEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

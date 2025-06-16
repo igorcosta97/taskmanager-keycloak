@@ -1,4 +1,4 @@
-package br.com.igorsilva.email_notification_service.security;
+package br.com.igorsilva.emailnotification.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

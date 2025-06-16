@@ -1,7 +1,7 @@
-package br.com.igorsilva.email_notification_service.services;
+package br.com.igorsilva.emailnotification.services;
 
-import br.com.igorsilva.email_notification_service.entities.EmailModel;
-import br.com.igorsilva.email_notification_service.repositories.EmailRepository;
+import br.com.igorsilva.emailnotification.entities.EmailModel;
+import br.com.igorsilva.emailnotification.repositories.EmailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

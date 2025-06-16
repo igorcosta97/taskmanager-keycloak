@@ -1,8 +1,8 @@
-package br.com.igorsilva.email_notification_service.controllers;
+package br.com.igorsilva.emailnotification.controllers;
 
-import br.com.igorsilva.email_notification_service.dtos.EmailDTO;
-import br.com.igorsilva.email_notification_service.entities.EmailModel;
-import br.com.igorsilva.email_notification_service.facades.EmailFacade;
+import br.com.igorsilva.emailnotification.dtos.EmailDTO;
+import br.com.igorsilva.emailnotification.entities.EmailModel;
+import br.com.igorsilva.emailnotification.facades.EmailFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

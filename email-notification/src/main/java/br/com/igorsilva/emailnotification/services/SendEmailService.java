@@ -1,6 +1,6 @@
-package br.com.igorsilva.email_notification_service.services;
+package br.com.igorsilva.emailnotification.services;
 
-import br.com.igorsilva.email_notification_service.entities.EmailModel;
+import br.com.igorsilva.emailnotification.entities.EmailModel;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;

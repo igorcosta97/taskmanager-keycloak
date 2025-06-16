@@ -1,4 +1,4 @@
-package br.com.igorsilva.email_notification_service.auth;
+package br.com.igorsilva.emailnotification.auth;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

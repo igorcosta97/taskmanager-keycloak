@@ -1,4 +1,4 @@
-package br.com.igorsilva.email_notification_service.entities;
+package br.com.igorsilva.emailnotification.entities;
 import jakarta.persistence.*;
 import lombok.*;
 

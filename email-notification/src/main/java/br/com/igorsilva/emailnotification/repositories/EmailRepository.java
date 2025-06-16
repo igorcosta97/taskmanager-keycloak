@@ -1,6 +1,6 @@
-package br.com.igorsilva.email_notification_service.repositories;
+package br.com.igorsilva.emailnotification.repositories;
 
-import br.com.igorsilva.email_notification_service.entities.EmailModel;
+import br.com.igorsilva.emailnotification.entities.EmailModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
