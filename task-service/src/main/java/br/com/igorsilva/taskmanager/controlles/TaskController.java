@@ -4,6 +4,7 @@ import br.com.igorsilva.taskmanager.dtos.EmailRequestDTO;
 import br.com.igorsilva.taskmanager.dtos.TaskDto;
 import br.com.igorsilva.taskmanager.entities.TaskModel;
 import br.com.igorsilva.taskmanager.services.ITaskService;
+import br.com.igorsilva.taskmanager.services.RabbitProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -27,6 +28,10 @@ public class TaskController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    private final RabbitProducer rabbitProducer;
+    public TaskController(RabbitProducer rabbitProducer) {
+        this.rabbitProducer = rabbitProducer;
+    }
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
@@ -58,6 +63,11 @@ public class TaskController {
         TaskModel taskCreated = taskService.createTask(newTask);
         log.info("Tarefa criada com sucesso: {}", taskCreated);
 
+        // Preparar mensagem para RabbitMQ
+        String mensagem = "Nova tarefa criada:" + taskCreated.getTitle();
+        // Enviar notificação via RabbitMQ
+        rabbitProducer.sendNotification(mensagem);
+        /*
         // Enviar notificação de e-mail após a criação da tarefa
         String emailServiceUrl = "http://localhost:8084/email/send";
         EmailRequestDTO emailRequest = new EmailRequestDTO(
@@ -82,6 +92,7 @@ public class TaskController {
         }else{
             log.info("Notificação de e-mail enviada com sucesso para: {}", emailRequest.recipient());
         }
+        */
 
         return ResponseEntity.status(HttpStatus.CREATED).body(taskCreated);
     }
